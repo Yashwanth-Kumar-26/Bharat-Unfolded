@@ -1,120 +1,113 @@
-# **Bharat Unfolded**
+# Bharat Unfolded
 
+*Where Temples Tell History*
 
+A production-ready web application for exploring India's cultural heritage and temple architecture through interactive discovery and AI-powered historical insights.
 
-**Bharat Unfolded – Revealing Bharat’s Hidden Temple Heritage**
+## 1️⃣ Project Overview
 
-## REAL-WORLD PROBLEM
-Bharat has over 7 million Hindu temples. Yet, most of them are:
-- Undocumented or recorded only in offline sources
-- Unknown to travelers and even locals
-- Missing from modern tourism platforms
-- Not explained in simple language for the youth
+**Bharat Unfolded** serves as a digital gateway to India's rich architectural and spiritual heritage. It addresses the challenge of making India's vast temple history accessible to global audiences by combining curated archival data with intelligent, context-aware AI assistance.
 
-The true cultural and historical richness of Bharat remains hidden.
+**Problem Solved:** Traditional heritage information is fragmented and static. Bharat Unfolded unifies this into an interactive experience.
+**Target Users:** Heritage enthusiasts, travelers, history students, and cultural researchers.
+**Status:** Production-Ready (V1.0)
 
-## WHY THIS PROBLEM MATTERS
-- **Heritage Loss** → Ancient Sanatana history may disappear if not digitized.
-- **Economic Boost** → Temple tourism supports local jobs & businesses.
-- **Heritage Loss** → Ancient Sanatana history may disappear if not digitized.
-- **Economic Boost** → Temple tourism supports local jobs & businesses.
-- **Education and Awareness** → Youth lack a reliable platform to explore authentic Bharat istory.
+## 2️⃣ Core Features
 
-## CORE FEATURES FOR PROTOTYPE
-- Smart Temple Itinerary Planner
-- Temple Knowledge Narratives (Legends + Architecture)
-- Interactive Map for Temple Circuits
-- Multilingual Responses (Regional + English)
-- Verified Heritage Database from reliable sources
+### 🏛️ Heritage & Temple Discovery
+Comprehensive database of Indian temples with detailed architectural and historical metadata.
+- **Smart Filtering**: Filter by Dynasty (Chola, Pallava), Era, State, or Deity.
+- **Rich Media**: High-fidelity image galleries and architectural breakdowns.
 
-**Prototype target:** Telangana & Andhra Pradesh
+### 🤖 Intelligent AI Guide
+Context-aware historical consultation powered by LLMs.
+- **Contextual Awareness**: The AI understands precisely which temple the user is viewing.
+- **Secure Sessions**: Chat history is persisted securely via server-side session management.
 
-## EXPECTED IMPACT — WHO BENEFITS
-- **Students & Researchers:** Learn true history
-- **Pilgrims & Devotees:** Better spiritual travel planning
-- **Foreign Tourists & NRIs:** Cultural discovery
-- **Local Communities:** Boost for temple economy
+### 🛡️ Resilient Data Handling
+Built for reliability in uncertain network conditions.
+- **Fallback Systems**: Automatic degradation to mock data if primary databases are unreachable.
+- **Error Boundaries**: Global React error handling prevents white-screen crashes.
 
-## WHY THIS COULD WIN THE HACKATHON
-- Unique focus on Hindu temple heritage
-- Helps preserve Bharat’s cultural identity
-- High social, educational, and tourism value
-- Technologically strong + culturally relevant
-- Scales to the entire country
+### ⚡ Scalable API Design
+- **RESTful Architecture**: Clean separation of concerns.
+- **Rate Limited**: Token-bucket protection on all public endpoints.
+- **Validated**: Strict Zod schema validation for all inputs.
 
-## VALIDATION METHOD
-User survey prompt: “Would this app help you better explore and understand temple heritage?”
+## 3️⃣ System Architecture
 
-**Success metrics:**
-- 70%+ positive response
-- Users discover new temples
-- Increased interest in historic travel
+The application follows a strict **Client-Server** separation model for security and performance.
 
-## VISION STATEMENT
-Unfold Bharat’s hidden temples. Restore Dharma’s lost stories. Let innovation reconnect youth with Bharat’s soul.
+### Client Layer (Frontend)
+- **Tech**: Next.js 15 (App Router), React, TypeScript, Tailwind CSS.
+- **Responsibilities**: UI rendering, interactive maps, static content display.
+- **State**: Stateless components; data fetching via Hooks/Suspense.
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black.svg?style=flat&logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/)
-[![Docker](https://img.shields.io/badge/Docker-blue.svg?style=flat&logo=docker)](https://docker.com)
-[![MongoDB](https://img.shields.io/badge/MongoDB-green.svg?style=flat&logo=mongodb)](https://mongodb.com)
+### Server Layer (Backend)
+- **Tech**: Next.js API Routes, Prisma ORM, Supabase (PostgreSQL).
+- **Responsibilities**: Authentication, sensitive data processing, AI orchestration, Rate Limiting.
+- **Security**: The "Trust Boundary" lies here. No secrets leak to the client.
 
-## ✨ Features
-- **Interactive Temple Maps**: Explore temples with geospatial data and directions (Temple Circuits)
-- **AI Chatbot**: Ask questions about temples, history, legends, architecture using OpenAI (Knowledge Narratives, Multilingual)
-- **Temple Details**: Rich information including history, timings, festivals, media (Verified Database)
-- **Smart Temple Itinerary Planner**: Personalized tours and circuits
-- **Multilingual Support**: Regional languages + English responses
-- **User Authentication**: Secure Google sign-in with Firebase
-- **Responsive Design**: Tailwind CSS + Radix UI for modern UI
-- **Performance Optimized**: Next.js SSR/SSG, Redis caching, MongoDB indexes
+### API Routes
+- `/api/chat`: AI consultation endpoint (protected, rate-limited).
+- `/api/chat/session`: Secure session management (GET/POST/DELETE).
+- `/api/db-check`: Health check and connectivity monitoring.
+- `/auth/callback`: OAuth security handlers.
 
-## 🛠️ Tech Stack
+### External Services
+- **Database**: Supabase (PostgreSQL with RLS).
+- **AI Inference**: OpenAI (proxied via Server).
+- **Maps/Media**: Leaflet / Supabase Storage.
 
-### Frontend
-- **Next.js 15** (App Router, SSR)
-- **React 18**, **TypeScript**
-- **Tailwind CSS**, **Radix UI** (shadcn/ui), **Framer Motion**
-- **React Query**, **Zod**, **React Hook Form**
+## 4️⃣ Scalability & Performance
 
-### Backend
-- **Fastify** (high-perf server)
-- **Mongoose + MongoDB 8**
-- **Firebase Admin** (Auth verification)
-- **Redis** (Sessions/Cache)
-- **OpenAI API** (Chat)
+### Caching Strategy
+- **Edge Caching**: Static assets and pages are cached at the CDN edge (Vercel).
+- **Data Efficiency**: Efficient Prisma queries with select-only projections to minimize payload size.
 
-### DevOps
-- **Docker Compose**
-- **Nginx** (Proxy)
-- **ESLint**, **TypeScript**
+### Stateless Design
+- **Zero Local State**: The server is fully stateless. User sessions are managed via database lookups and JWTs, enabling infinite horizontal scaling of server instances.
 
+### Cost-Aware Scaling
+- **Controlled AI**: Rate limits restrict expensive AI calls per IP.
+- **Optimized Assets**: Next.js Image optimization reduces bandwidth costs.
 
+## 5️⃣ Security & Best Practices
 
-**Auth**: JWT from Firebase, protected routes.
+### Server-Side Protection
+- **Secret Management**: API keys (OpenAI, Supabase Service Role) stay strictly on the server.
+- **Proxy Pattern**: The Client never calls OpenAI directly; it requests the Server, which authenticates and proxies the call.
 
-## 🗄️ Database
-- **Temples**: Name, location (geo), history, media, details, timings, festivals
+### Safe Data Handling
+- **Input Validation**: All API bodies are validated with `Zod` schemas before processing.
+- **Sanitization**: Output encoding prevents XSS.
+- **Row Level Security (RLS)**: Database policies enforce potential access control at the engine level.
 
-## 🚀 Deployment
-- **Self-host**: Docker Compose for prod/dev
-- **Cloud**: Vercel (frontend), Railway/Render/DigitalOcean (full stack)
+### Rate Limiting
+- **Defense Depth**: Custom in-memory token bucket limiter prevents abuse of the Chat and Auth APIs.
 
-Env vars required: Firebase, MongoDB, Redis, OpenAI.
+## 6️⃣ Reliability & Fault Tolerance
 
-## 📄 License
+### Graceful Degradation
+If the database or AI service goes down:
+1.  **UI**: Shows a friendly "Offline/Error" state, not a crash.
+2.  **Data**: Falls back to static/mock content where permitted (e.g., Explore page).
 
-MIT
+### Timeouts & Isolation
+- **Strict Timeouts**: OpenAI calls have a 30s hard timeout to prevent hanging connections.
+- **Failure Isolation**: A failure in the Chat system does not break the Explore or Maps features.
 
-## 🙌 Acknowledgments
-- Temple data from public sources
-- shadcn/ui, Tailwind, Next.js teams
-- Firebase, OpenAI, MongoDB
+## 7️⃣ Deployment Readiness
 
-##
+- **Platform Agnostic**: Runs as a standard Node.js app (Docker supported) or Serverless (Vercel).
+- **Production Tested**: `npm run build` passes with strict type checking.
+- **Config**: Consolidated environment variables (12-factor app compliant).
 
+## 8️⃣ Future Enhancements
 
+- **Observability**: Integration with Datadog/Sentry for structured log aggregation.
+- **Distributed Rate Limiting**: Migrate from in-memory to Redis (Upstash) for multi-region consistency.
+- **Feature Expansion**: User-generated content (reviews/photos) and multi-language AI support.
 
-## ***Preserving Bharat 's sacred heritage, one temple at a    time🇮🇳***
-
-**By**
-**Team Chanakya Circle**
+---
+*Maintained by the Bharat Unfolded Engineering Team.*
