@@ -4,7 +4,7 @@
 
 A production-ready web application for exploring India's cultural heritage and temple architecture through interactive discovery and AI-powered historical insights.
 
-[Here -->](https://bharat-unfold.vercel.app/)
+[I'm Here](https://bharat-unfold.vercel.app/)
 
 ## 1️⃣ Project Overview
 
